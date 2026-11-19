@@ -1,5 +1,4 @@
 <?php
-// Database connection module (PDO)
 $host = 'localhost';
 $dbname = 'task_db';
 $username = 'root';

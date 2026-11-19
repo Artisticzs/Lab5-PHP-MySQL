@@ -6,7 +6,6 @@ $editId = null;
 $formName = '';
 $formDescription = '';
 
-// Shared validation for create and update
 function validateTask($name, $description) {
     $errors = [];
 
@@ -27,7 +26,6 @@ function validateTask($name, $description) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // DELETE: remove a task
     if (isset($_POST['delete_id'])) {
         $id = $_POST['delete_id'];
 
@@ -40,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // UPDATE (status): toggle between pending and completed
     if (isset($_POST['toggle_id'])) {
         $id = $_POST['toggle_id'];
 
@@ -59,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $taskDescription = trim($_POST['task_description'] ?? '');
     $errors = validateTask($taskName, $taskDescription);
 
-    // UPDATE (edit): save a changed name/description
     if (isset($_POST['update_id'])) {
         $id = $_POST['update_id'];
 
@@ -75,9 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
-        $editId = (int)$id; // stay in edit mode and show errors
+        $editId = (int)$id;
     }
-    // CREATE: insert a new task
     else {
         if (empty($errors)) {
             $stmt = $pdo->prepare("INSERT INTO tasks (task_name, task_description) VALUES (?, ?)");
@@ -87,12 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Keep what the user typed if there were errors
     $formName = $taskName;
     $formDescription = $taskDescription;
 
 } elseif (isset($_GET['edit'])) {
-    // Open edit mode: load the task into the form (read-only, so GET is fine)
     $id = $_GET['edit'];
 
     if (ctype_digit($id)) {
@@ -108,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// READ: fetch all tasks
 $stmt = $pdo->prepare("SELECT * FROM tasks ORDER BY created_at DESC, id DESC");
 $stmt->execute();
 $tasks = $stmt->fetchAll();

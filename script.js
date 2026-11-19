@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. Confirm before deleting a task
   document.querySelectorAll(".delete-btn").forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       if (!confirm("Delete this task?")) {
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // 2. Live character counter on the description input
   var desc = document.getElementById("task_description");
   var counter = document.createElement("small");
   counter.textContent = desc.value.length + " / 255";
@@ -18,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
     counter.textContent = desc.value.length + " / 255";
   });
 
-  // 3. Don't allow a name that's only spaces
   var form = document.getElementById("task-form");
   form.addEventListener("submit", function (e) {
     var name = document.getElementById("task_name").value.trim();

@@ -1,6 +1,3 @@
--- Lab 5: To-Do List database
--- Run this in HeidiSQL (Query tab -> F9) to create the database and table.
-
 CREATE DATABASE IF NOT EXISTS `task_db`;
 USE `task_db`;
 
